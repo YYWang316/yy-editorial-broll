@@ -1,10 +1,10 @@
-# 动效语法 · stop-motion 定格 + 拟音
+# 动效语法 · stop-motion 定格（拟音预览仅按需）
 
 ## 为什么是定格
 
 这个风格假装自己是手工纸拼贴的定格动画。smooth ease 会立刻暴露"这是网页动画"，所以：
 
-- 30fps 渲染，落位对齐 **10fps 网格**（每 3 帧一格），一律 `ease:"steps(n)"`。
+- 默认 30fps 渲染（用户指定 fps 则按其要求），落位对齐 **10fps 网格**（30fps 时每 3 帧一格），一律 `ease:"steps(n)"`。
 - 常用档位：`{duration:.3, ease:"steps(3)"}`（落位）、`{duration:.4, ease:"steps(4)"}`（滑入）、翻面 `steps(6)`、计时/进度 `steps(24)`。
 - 每次重要落位后 **hold ≥ 0.8s**——暂停即是一张可读海报。5s 一条的节奏大致是：0–0.4 页眉，0.4–3.5 拼装，3.5 起静止收帧。
 - 转场是纸片被**抽走 / 翻面 / 吸走 / 推入**，不用 opacity fade 当主转场（fade 只做 0.1–0.2s 的辅助消隐）。
@@ -16,7 +16,7 @@
 |---|---|---|
 | 吸入 | 概念封装、收纳 | 元素缩小 + 位移进入容器口，`steps(5)`，吸完目标内容逐行揭示 |
 | 堆叠落位 | 系列预告、多单元 | 逐张从画外飞入，色条/编号/名称按 0.2s 间隔跟进 |
-| 撞入 | 数字冲击 | 数字 scale 1.5→1 定格 3 格，配 pop 拟音 |
+| 撞入 | 数字冲击 | 数字 scale 1.5→1 定格 3 格；仅显式要求声音预览时配 pop 拟音 |
 | 景深 | 时间压缩、背景文档 | 背景 blur 15px→0，与计时/进度同步收清 |
 | 生长 | 决策树、流程 | 根→干→梁→支→节点，严格自下而上，`transform-origin` 对准生长方向 |
 | 抽屉 | 分类库、公式库 | 全部格先松开一档，重点格抽到底 + 变点色 + 标签揭示 |
@@ -39,7 +39,13 @@ window.__timelines.<compositionId> = tl;    // 必须注册
 - 撕边、微旋等"随机"全部预生成写死（collage.css 里的 torn-11/22/33 就是固定种子产物）。
 - 无渲染期网络请求：gsap 用项目内 `assets/gsap.min.js`。
 
-## 拟音（内置进成片）
+## 拟音（仅用户明确请求的声音设计预览）
+
+Default delivery is a silent editing master. Audio-bearing previews are opt-in only.
+
+默认 SILENT ONLY：正式 composition 不加 `<audio>`、音频 cue 或 SFX 生成逻辑，不生成 sfx.wav，不混 AAC，不先渲染带音轨版本再剥离。音效、对白、音乐与最终声音设计在视频编辑器完成。本节仅在用户明确要求“show me the motion with SFX”“test the sound design”“I want to hear the motion rhythm”等时执行；“完成动画 / QA / 预览画面”不构成音频请求。
+
+显式请求后，将音频加入单独的预览 composition，输出另行标识的声音预览，不覆盖或污染 `-SILENT.mp4` 及其源文件。可手动复制下述音色库；项目初始化默认不会复制。其余视觉、节拍和审批规则保持不变。
 
 音色库在 skill `assets/sfx/`（已裁短加淡出，来源 Mixkit 免版权）：
 

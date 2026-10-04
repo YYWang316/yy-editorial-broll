@@ -11,7 +11,8 @@ if [ -e "$PROJ" ]; then echo "已存在: $PROJ" >&2; exit 1; fi
 
 mkdir -p "$PROJ"/{assets,style-plates,compositions,renders,qa}
 cp "$SKILL_DIR/assets/collage.css" "$SKILL_DIR/assets/gsap.min.js" "$PROJ/assets/"
-cp -r "$SKILL_DIR/assets/sfx" "$PROJ/assets/sfx"
+# Default delivery is a silent editing master. Audio-bearing previews are opt-in only.
+# Do not copy SFX or scaffold audio cues for normal production.
 
 cat > "$PROJ/hyperframes.json" <<'EOF'
 {

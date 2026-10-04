@@ -45,8 +45,8 @@ command -v ffprobe >/dev/null 2>&1 && ok "ffprobe" || bad "未找到 ffprobe"
 SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 [ -f "$SKILL_DIR/assets/collage.css" ]  && ok "assets/collage.css" || bad "缺 assets/collage.css"
 [ -f "$SKILL_DIR/assets/gsap.min.js" ]  && ok "assets/gsap.min.js" || bad "缺 assets/gsap.min.js"
-SFX_N=$(ls "$SKILL_DIR/assets/sfx/"*.mp3 2>/dev/null | wc -l | tr -d ' ')
-[ "$SFX_N" -ge 10 ] && ok "assets/sfx/（$SFX_N 个音效）" || bad "assets/sfx/ 音效不全（$SFX_N/10）"
+# SFX assets are optional for explicitly requested sound-design previews.
+# Their availability must not block the default silent-master workflow.
 
 echo
 if [ "$FAIL" -eq 0 ]; then
